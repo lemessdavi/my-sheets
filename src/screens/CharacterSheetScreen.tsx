@@ -54,7 +54,7 @@ const CharacterSheetScreen = ({ route, navigation }) => {
     }
   };
 
-  const handleInputChange = (field, value, isAbility = false, abilityField = "") => {
+  const handleInputChange = (field, value, isAbility = false, abilityField = "", isSave = false) => {
     if (isAbility) {
       setCharacter((prevState) => ({
         ...prevState,
@@ -64,6 +64,14 @@ const CharacterSheetScreen = ({ route, navigation }) => {
             ...prevState.abilities[field],
             [abilityField]: value,
           },
+        },
+      }));
+    } else if (isSave) {
+      setCharacter((prevState) => ({
+        ...prevState,
+        savingThrows: {
+          ...prevState.savingThrows,
+          [field]: value,
         },
       }));
     } else {
@@ -219,7 +227,7 @@ const CharacterSheetScreen = ({ route, navigation }) => {
               key={savingThrow}
               label={savingThrow.toUpperCase()}
               modifier={character.savingThrows[savingThrow]}
-              onChange={(value) => handleInputChange(savingThrow, value)}
+              onChange={(value) => handleInputChange(savingThrow, value, false, "", true)}
             />
           ))}
         </View>
